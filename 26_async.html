@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Chai Aur Code</h1>
+    <button id="stop">Stop</button>
+</body>
+<script>
+    const button = document.querySelector('#stop')
+    const disclaimer = document.createElement('div')
+    const body = document.querySelector('body')
+    body.appendChild(disclaimer)
+
+    function changeName(){
+        document.querySelector('h1').innerHTML = 'Best js Series'
+    }
+    const changeText = setTimeout(changeName, 11000)
+    // function changecolor(){
+    //     button.style.backgroundColor = 'yellow'
+    // }
+    // button.addEventListener('click', (e) => {
+    //     setTimeout(changecolor, 1000)
+    // })
+    let interval
+
+    button.addEventListener('click', (e) => {
+        clearTimeout(changeText)
+        clearInterval(interval)
+        disclaimer.innerHTML= 'you did it!'
+
+    })
+    function timer(count){
+            interval = setInterval(() => {
+            disclaimer.textContent = count
+            if(count === 0){
+                disclaimer.textContent = 'oops you missed'
+                clearInterval(interval)
+            }
+            count--
+         },1000)
+    }
+    timer(10)
+</script>
+</html>
