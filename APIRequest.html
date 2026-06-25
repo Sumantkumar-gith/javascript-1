@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .hidden{
+            display:none;
+        }
+        .borderStyle{
+            border: 2px solid white;
+            background-color: plum;
+        }
+        .backColor{
+            background-color: cyan;
+        }
+        .size{
+            height: auto;
+            width: 200px;
+        }
+    </style>
+</head>
+<body style="background-color: #212121; font-size: 14px;">
+    <!-- 0	UNSENT	Client has been created. open() not called yet.
+1	OPENED	open() has been called.
+2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+3	LOADING	Downloading; responseText holds partial data.
+4	DONE	The operation is complete. -->
+</body>
+<script>
+    const body =document.querySelector('body')
+    const div = document.createElement('div')
+    const photoframe = document.createElement('img')
+    const button = document.createElement('button')
+    const info = document.createElement('p')
+    const name1 = document.createElement('span')
+    const age = document.createElement('span')
+    div.appendChild(photoframe)
+    info.appendChild(name1)
+    info.appendChild(age)
+    div.appendChild(info)
+    console.log(div);
+    div.style.height = '300px'
+    div.style.width = '250px'
+    photoframe.style.width = '170px'
+    photoframe.style.height = '170px'
+    photoframe.style.marginBottom = '30px'
+    photoframe.style.padding = '20px 20px 0px 20px'
+    info.style.display = 'flex'
+    info.style.justifyContent = 'space-around'
+    info.style.alignItems = 'center'
+    button.innerHTML = 'Generate Random User'
+    body.appendChild(button)
+    body.appendChild(div)
+    div.classList.add('borderStyle')
+    div.classList.add('hidden')
+    div.style.flexDirection = 'column'
+    div.style.justifyContent = 'space-between'
+    div.style.alignItems = 'center'
+    info.classList.add('backColor')
+    info.classList.add('size')
+    name1.style.height =  'auto'
+    name1.style.width =  'auto'
+    age.style.height =  'auto'
+    age.style.width =  'auto'
+    body.style.display = 'flex'
+    body.style.alignItems = 'center'
+    body.style.justifyContent = 'center'
+    body.style.height = '500px'
+    name1.style.whiteSpace = 'none'
+    age.style.whiteSpace = 'none'
+   
+    const requestURL = 'https://randomuser.me/api/'
+    const xhr = new XMLHttpRequest()
+    xhr.open('GET', requestURL)
+    xhr.onreadystatechange = function(){
+        console.log(xhr.readyState);
+        if(xhr.readyState === 4){
+            const data = JSON.parse(xhr.responseText)        //convert to json data after parsing(parsing is a method to convert to json)
+            console.log(data);
+            button.addEventListener('click', (e) => {
+                div.style.display = 'flex'
+                photoframe.setAttribute('src', data.results[0].picture.large)
+                button.classList.add('hidden')
+                name1.innerHTML = `Name: ${data.results[0].name.first} ${data.results[0].name.last}`
+                age.innerHTML = `Age: ${data.results[0].dob.age}`
+            })
+        }
+    }  
+    window.addEventListener('keydown', (e) => {
+        if(button.classList.contains('hidden')){
+            if(e.key === 'Enter'){
+            button.classList.remove('hidden')
+            div.style.display = 'none'
+            xhr.open('GET', requestURL)
+            xhr.send()
+            }
+        }
+    }) 
+    xhr.send()
+
+</script>
+</html>
