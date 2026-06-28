@@ -79,6 +79,10 @@
         if(xhr.readyState === 4){
             const data = JSON.parse(xhr.responseText)        //convert to json data after parsing(parsing is a method to convert to json)
             console.log(data);
+            console.log(typeof data);
+            console.log(typeof data.results[0].dob.age);
+            
+            
             button.addEventListener('click', (e) => {
                 div.style.display = 'flex'
                 photoframe.setAttribute('src', data.results[0].picture.large)
